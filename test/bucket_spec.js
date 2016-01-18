@@ -1,9 +1,11 @@
 import { expect } from 'chai'
 import * as coreLib from '../src/core'
 import Immutable from 'immutable'
+import sinon from 'sinon'
+import * as util from '../src/util'
 
 describe('bucket logic', () => {
-  it('coreLib.moveBucket() index 1 -> 0', () => {
+  it('moveBucket() index 1 -> 0', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -54,7 +56,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index 0 -> 1', () => {
+  it('moveBucket() index 0 -> 1', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -105,7 +107,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index [0] -> [1]', () => {
+  it('moveBucket() index [0] -> [1]', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -154,7 +156,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index [0] -> [2]', () => {
+  it('moveBucket() index [0] -> [2]', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -203,7 +205,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index [1] -> [0]', () => {
+  it('moveBucket() index [1] -> [0]', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -252,7 +254,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index [1] -> [2]', () => {
+  it('moveBucket() index [1] -> [2]', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -301,7 +303,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index [2] -> [0]', () => {
+  it('moveBucket() index [2] -> [0]', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -350,7 +352,7 @@ describe('bucket logic', () => {
     expect(nextState).to.equal(expectedNextState);
   });
 
-  it('coreLib.moveBucket() index [2] -> [1]', () => {
+  it('moveBucket() index [2] -> [1]', () => {
     const state = Immutable.fromJS({
       buckets: [
         {
@@ -425,12 +427,16 @@ describe('bucket logic', () => {
     });
     const action = {
       type: coreLib.CREATE_BUCKET,
-      bucketId: 1,
       title: 'Development'
     };
 
+    sinon.stub(util, 'UUID', () => {
+      return 1;
+    });
+
     const nextState = coreLib.createBucket(state, action);
     expect(nextState).to.equal(expectedNextState);
+    util.UUID.restore();
   });
 
   it('deleteBucket()', () => {

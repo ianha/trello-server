@@ -1,6 +1,8 @@
 import { expect } from 'chai'
 import * as coreLib from '../src/core'
 import Immutable from 'immutable'
+import sinon from 'sinon'
+import * as util from '../src/util'
 
 describe('transfer card logic', () => {
   it('transferCard() size 1 -> 0', () => {
@@ -883,13 +885,17 @@ describe('card logic', () => {
     const action = {
       type: coreLib.ADD_CARD,
       bucketId: 0,
-      cardId: 0,
       title: 'New card',
       description: 'New card description'
     };
 
+    sinon.stub(util, 'UUID', () => {
+      return 0;
+    });
+
     const nextState = coreLib.addCard(state, action);
     expect(nextState).to.equal(expectedNextState);
+    util.UUID.restore();
   });
 
   it('deleteCard()', () => {

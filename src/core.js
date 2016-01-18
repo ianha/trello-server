@@ -1,4 +1,5 @@
 import { Map, List } from 'immutable';
+import * as util from './util';
 
 export const INITIAL_STATE = Map();
 
@@ -11,7 +12,6 @@ export const MOVE_BUCKET = 'MOVE_BUCKET'
 export const UPDATE_BUCKET = 'UPDATE_BUCKET'
 export const CREATE_BUCKET = 'CREATE_BUCKET'
 export const DELETE_BUCKET = 'DELETE_BUCKET'
-
 
 export function transferCard(state, action) {
   const fromBucket = state.get('buckets').find(x => x.get('bucketId') === action.fromBucketId)
@@ -53,19 +53,20 @@ export function moveCard(state, action) {
     });
 }
 
-function buildCardFromAction(action) {
+function createCardFromAction(action) {
   return Map({
     title: action.title,
     description: action.description,
-    cardId: action.cardId
+    cardId: util.UUID()
   });
 }
-export function addCard(state, action) {
+
+export function addCard(state, action = {}) {
   return state
     .update('buckets', buckets => {
       const bucketIndex = buckets.findIndex(b => b.get('bucketId') === action.bucketId)
       return buckets.update(bucketIndex, bucket => {
-        return bucket.set('cards', bucket.get('cards').push(buildCardFromAction(action)))
+        return bucket.set('cards', bucket.get('cards').push(createCardFromAction(action)))
       });
     });
 }
@@ -81,9 +82,9 @@ export function deleteCard(state, action) {
     });
 }
 
-function buildBucketFromAction(action) {
+function createBucketFromAction(action) {
   return Map({
-    bucketId: action.bucketId,
+    bucketId: util.UUID(),
     title: action.title,
     cards: List()
   });
@@ -91,7 +92,7 @@ function buildBucketFromAction(action) {
 export function createBucket(state, action) {
   return state
     .update('buckets', buckets => {
-      return buckets.push(buildBucketFromAction(action));
+      return buckets.push(createBucketFromAction(action));
     })
 }
 
