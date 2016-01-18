@@ -1,8 +1,6 @@
 import { Map, List } from 'immutable';
 import * as util from './util';
 
-export const INITIAL_STATE = Map();
-
 export const TRANSFER_CARD = 'TRANSFER_CARD'
 export const MOVE_CARD = 'MOVE_CARD'
 export const ADD_CARD = 'ADD_CARD'

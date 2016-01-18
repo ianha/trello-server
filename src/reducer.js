@@ -1,6 +1,7 @@
 import * as coreLib from './core'
+import { getInitialState } from './persistence'
 
-export default function reducer(state = coreLib.INITIAL_STATE, action) {
+export default function reducer(state = getInitialState(), action) {
   switch (state.type) {
     case coreLib.ADD_CARD:
       return coreLib.addCard(state, action);
@@ -20,7 +21,6 @@ export default function reducer(state = coreLib.INITIAL_STATE, action) {
       return coreLib.updateBucket(state, action);
     case coreLib.UPDATE_CARD:
       return coreLib.updateCard(state, action);
-    default:
-      return state;
   }
+  return state;
 }
