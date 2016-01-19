@@ -1,7 +1,7 @@
 import * as coreLib from './core'
-import { getInitialState } from './persistence'
+import { getInitialState, STATE_FILE_PATH } from './persistence'
 
-export default function reducer(state = getInitialState(), action) {
+export default function reducer(state = getInitialState(STATE_FILE_PATH), action) {
   switch (state.type) {
     case coreLib.ADD_CARD:
       return coreLib.addCard(state, action);
