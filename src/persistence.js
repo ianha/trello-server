@@ -2,8 +2,7 @@ import Immutable from 'immutable';
 import fs from 'fs';
 
 export const INITIAL_STATE = Immutable.Map();
-
-export const STATE_FILE_PATH = '../data/state.json'
+export const STATE_FILE_PATH = './data/state.json'
 
 export function persist(state, path, callback = (err) => { if (err) throw err; }) {
   fs.writeFile(path, JSON.stringify(state.toJS()), callback);

@@ -2,7 +2,7 @@ import * as coreLib from './core'
 import { getInitialState, STATE_FILE_PATH } from './persistence'
 
 export default function reducer(state = getInitialState(STATE_FILE_PATH), action) {
-  switch (state.type) {
+  switch (action.type) {
     case coreLib.ADD_CARD:
       return coreLib.addCard(state, action);
     case coreLib.CREATE_BUCKET:

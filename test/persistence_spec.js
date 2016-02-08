@@ -45,8 +45,8 @@ describe('persistence', () => {
       try {
         const readState = getInitialState(filePath);
         expect(state).to.equal(readState);
-      } catch (e) {
-        console.log('Error persisting to file ' + e);
+      } catch (err) {
+        console.log(err);
       }
 
       fs.unlink(filePath);
