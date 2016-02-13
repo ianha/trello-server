@@ -439,6 +439,33 @@ describe('bucket logic', () => {
     util.UUID.restore();
   });
 
+  it('createFirstBucket()', () => {
+    const state = Immutable.fromJS({
+      buckets: []
+    });
+    const expectedNextState = Immutable.fromJS({
+      buckets: [
+        {
+          bucketId: 0,
+          title: 'Backlog',
+          cards: []
+        }
+      ]
+    });
+    const action = {
+      type: coreLib.CREATE_BUCKET,
+      title: 'Backlog'
+    };
+
+    sinon.stub(util, 'UUID', () => {
+      return 0;
+    });
+
+    const nextState = coreLib.createBucket(state, action);
+    expect(nextState).to.equal(expectedNextState);
+    util.UUID.restore();
+  });
+
   it('deleteBucket()', () => {
     const state = Immutable.fromJS({
       buckets: [

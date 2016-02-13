@@ -1,7 +1,9 @@
 import Immutable from 'immutable';
 import fs from 'fs';
 
-export const INITIAL_STATE = Immutable.Map();
+export const INITIAL_STATE = Immutable.fromJS({
+  buckets: []
+})
 export const STATE_FILE_PATH = './data/state.json'
 
 export function persist(state, path, callback = (err) => { if (err) throw err; }) {
